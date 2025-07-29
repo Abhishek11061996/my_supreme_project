@@ -101,6 +101,14 @@ const MainSection = () => {
     };
   };
 
+  const handlePassengerSectionChange = (section: PassengerSection) => {
+    setPassengerSection(section);
+  };
+
+  const handleCommercialSectionChange = (section: CommercialSection) => {
+    setCommercialSection(section);
+  };
+
   return (
     <section 
       ref={sectionRef}
@@ -199,56 +207,68 @@ const MainSection = () => {
                 <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
                   {activeVehicle === 'passenger' ? (
                     <>
-                      {(['Complete Body', 'Front', 'Cabin', 'Trunk', 'Exterior'] as PassengerSection[]).map((section) => (
-                        <div key={section} className="flex flex-col items-center">
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 ">
-                            <img 
-                              src={imageSources.passenger[section]} 
-                              alt={section}
-                              className="w-full h-full object-contain"
-                            />
+                      {(['Complete Body', 'Front', 'Cabin', 'Trunk', 'Exterior'] as PassengerSection[]).map((section) => {
+                        const isSelected = passengerSection === section;
+                        return (
+                          <div key={section} className="flex flex-col items-center">
+                            <button
+                              onClick={() => handlePassengerSectionChange(section)}
+                              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-50 hover:opacity-75'}`}
+                            >
+                              <img 
+                                src={imageSources.passenger[section]} 
+                                alt={section}
+                                className="w-full h-full object-contain"
+                              />
+                            </button>
+                            <button
+                              onClick={() => handlePassengerSectionChange(section)}
+                              className={`transition-all cursor-pointer ${manrope.className} 
+                                font-medium text-[12px] sm:text-[14px] md:text-[16px] text-center leading-[1.2] sm:leading-[43.24px] tracking-[0.01em]
+                                px-1 sm:px-2 py-0.5 sm:py-1
+                                ${isSelected
+                                  ? 'text-white'
+                                  : 'text-gray-300 hover:text-white opacity-50 hover:opacity-75'
+                                }
+                              `}
+                            >
+                              {section}
+                            </button>
                           </div>
-                          <button
-                            onClick={() => setPassengerSection(section)}
-                            className={`transition-all cursor-pointer ${manrope.className} 
-                              font-medium text-[12px] sm:text-[14px] md:text-[16px] text-center leading-[1.2] sm:leading-[43.24px] tracking-[0.01em]
-                              px-1 sm:px-2 py-0.5 sm:py-1
-                              ${passengerSection === section
-                                ? 'text-white'
-                                : 'text-gray-300 hover:text-white'
-                              }
-                            `}
-                          >
-                            {section}
-                          </button>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </>
                   ) : (
                     <>
-                      {(['Complete Body', 'Engine', 'Cabin'] as CommercialSection[]).map((section) => (
-                        <div key={section} className="flex flex-col items-center">
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-1 sm:mb-2">
-                            <img 
-                              src={imageSources.commercial[section]} 
-                              alt={section}
-                              className="w-full h-full object-contain"
-                            />
+                      {(['Complete Body', 'Engine', 'Cabin'] as CommercialSection[]).map((section) => {
+                        const isSelected = commercialSection === section;
+                        return (
+                          <div key={section} className="flex flex-col items-center">
+                            <button
+                              onClick={() => handleCommercialSectionChange(section)}
+                              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-1 sm:mb-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-50 hover:opacity-75'}`}
+                            >
+                              <img 
+                                src={imageSources.commercial[section]} 
+                                alt={section}
+                                className="w-full h-full object-contain"
+                              />
+                            </button>
+                            <button
+                              onClick={() => handleCommercialSectionChange(section)}
+                              className={`transition-all cursor-pointer ${manrope.className} 
+                                font-medium text-[12px] sm:text-[14px] md:text-[16px] text-center leading-[1.2] sm:leading-[43.24px] tracking-[0.01em]
+                                px-1 sm:px-2 py-0.5 sm:py-1 ${
+                                isSelected
+                                  ? 'text-white'
+                                  : 'text-gray-300 hover:text-white opacity-50 hover:opacity-75'
+                              }`}
+                            >
+                              {section}
+                            </button>
                           </div>
-                          <button
-                            onClick={() => setCommercialSection(section)}
-                            className={`transition-all cursor-pointer ${manrope.className} 
-                              font-medium text-[12px] sm:text-[14px] md:text-[16px] text-center leading-[1.2] sm:leading-[43.24px] tracking-[0.01em]
-                              px-1 sm:px-2 py-0.5 sm:py-1 ${
-                              commercialSection === section
-                                ? 'text-white'
-                                : 'text-gray-300 hover:text-white'
-                            }`}
-                          >
-                            {section}
-                          </button>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </>
                   )}
                 </div>
